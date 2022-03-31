@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
 
   loadModel() async {
     await Tflite.loadModel(
-      model: "assets/model_unquant.tflite",
+      model: "assets/model.tflite",
       labels: "assets/labels.txt",
     );
   }
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
   classifyImage(File image) async {
     var output = await Tflite.runModelOnImage(
       path: _image.path,
-      numResults: 2,
+      numResults: 5,
       threshold: 0.5,
       imageMean: 127.5,
       imageStd: 127.5,
@@ -148,9 +148,12 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 20,
+                              ),
                               _output != null
                                   ? Text(
-                                      "Prediction is ${_output![0]["label"]}",
+                                      "Prediction is ${_output![0]["label"].toUpperCase()}",
                                       style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
@@ -163,7 +166,7 @@ class _HomeState extends State<Home> {
                 ]),
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
